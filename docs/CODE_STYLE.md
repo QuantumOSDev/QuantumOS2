@@ -29,7 +29,8 @@ multiboot_info_t mb_info = (multiboot_info_t*)addr;
 ```c
 char** args = (char**)kcalloc(4, sizeof(char*));
 ```
-**When value type isn't the same as variable type we should cast it always!**
+> [!IMPORTANT]
+> When value type isn't the same as variable type we should cast it always!
 ### Headers
 ```c
 /*
