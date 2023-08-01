@@ -19,6 +19,8 @@ vesa_graphics_t* vesa_init(multiboot_info_t* mb_info)
     vesa_global_info.height  = mb_info->framebuffer_height;
     vesa_global_info.pitch   = mb_info->framebuffer_pitch;
     vesa_global_info.fb_size = vesa_global_info.width * 4 + vesa_global_info.height * vesa_global_info.pitch;
+
+    return vesa_get_struct_info();
 }
 
 void vesa_put_pixel(int x, int y, color_t color)

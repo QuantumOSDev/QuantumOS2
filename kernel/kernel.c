@@ -14,6 +14,8 @@
 #include <quantum/drivers/vga.h>
 #include <quantum/drivers/pio.h>
 
+#include <quantum/drivers/cmos/rtc.h>
+
 void kernel_init(unsigned long magic, unsigned long addr)
 {
     multiboot_info_t* mb_info = (multiboot_info_t*)addr;
@@ -22,11 +24,18 @@ void kernel_init(unsigned long magic, unsigned long addr)
 
     print_init(color_create_rgb(250, 250, 250), color_create_rgb(0, 0, 0));
     
-    printf("Hello, World! Quantum OS printf function works perfectly.\n\
-Format of int in decimal: %d\n\
-Format of int in octal: 0o%o\n\
-Format of int in binary: 0b%b\n\
-Format of int in hexadecimal: 0x%x\n\
-Format of long: %l\n\
-", 10, 10, 10, 0xA, 3489178732);
+    printf("Hello, World!\n");
+    printf("Quantum OS booted successfully with \"%s\" into %dx%d graphics\n\n", 
+        (const char*)((void*)mb_info->boot_loader_name), vesa_graphics->width, vesa_graphics->height);
+
+    rtc_time_t time = rtc_get_current_time();
+    printf("Current time (UTC) %s%d:%s%d:%s%d %d%d:%s%d:%s%d\n",
+        time.hour <= 9 ? "0" : "",
+        time.hour, time.minute <= 9 ? "0" : "", 
+        time.minute, time.second <= 9 ? "0" : "", 
+        time.second, 
+        20,
+        time.year, 
+        time.month <= 9 ? "0" : "", time.month, 
+        time.day <= 9 ? "0" : "", time.day);
 }

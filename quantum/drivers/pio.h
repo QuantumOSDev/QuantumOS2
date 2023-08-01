@@ -17,4 +17,4 @@ unsigned int   inl(unsigned short port);
 
 void psleep(void);
 
-#endif /* __QUANTUMN_ */
+#endif /* __QUANTUM_PIO_H */
