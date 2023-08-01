@@ -5,7 +5,7 @@
 
 #include <quantum/graphics/print.h>
 #include <quantum/graphics/color.h>
-#include <quantum/graphics/fonts.h>
+#include <quantum/graphics/unifont.h>
 #include <quantum/graphics/vesa.h>
 
 static print_t print_info;
@@ -17,16 +17,6 @@ void print_init(color_t fg, color_t bg)
 
     print_info.fg = color_create_rgb(250, 250, 250);
     print_info.bg = color_create_rgb(  0,   0,   0);
-}
-
-void kprintf(const char* fmt, ...)
-{
-
-}
-
-void println(const char* msg)
-{
-
 }
 
 void print(const char* msg)
@@ -42,7 +32,7 @@ void print(const char* msg)
 
 void insert_newline() 
 {
-    print_info.x = 2;
+    print_info.x = 10;
     print_info.y += 22;
 
     if (print_info.y >= 720)

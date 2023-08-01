@@ -5,7 +5,7 @@
 
 #include <quantum/graphics/vesa.h>
 
-#include <quantum/graphics/fonts.h>
+#include <quantum/graphics/unifont.h>
 #include <quantum/graphics/color.h>
 
 static vesa_graphics_t vesa_global_info;
@@ -45,14 +45,12 @@ vesa_graphics_t* vesa_get_struct_info()
 void vesa_draw_character(char c, int x, int y, color_t fg, 
                          color_t bg, unsigned char* __font_data)
 {
-    unsigned char* font_char = &__font_data[c * 16];
+    char* font_char = &font_data[c * FONT_WIDTH];
 
-    for (int j = 0; j < 16; j++)
-        for (int i = 0; i < 8; i++)
-            if (font_char[j] & (1 << (7 - i))) 
-                vesa_put_pixel(x + i, y + j, fg); 
-            else
-                vesa_put_pixel(x + i, y + j, bg); 
+    for (int i = 1; i < FONT_WIDTH + 1; i++)
+        for (int j = 0; j < FONT_HEIGHT + 1; j++)
+            if (font_char[i] & (1 << (FONT_HEIGHT - j)))
+                vesa_put_pixel(x+j, y+i, fg);
 }
 
 void vesa_clear()

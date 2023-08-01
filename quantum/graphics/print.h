@@ -15,10 +15,6 @@ typedef struct __print_t {
 
 void print_init(color_t fg, color_t bg);
 
-void kprintf(const char* fmt, ...);
-
-void println(const char* msg);
-
 void print(const char* msg);
 
 void putchar(char c);

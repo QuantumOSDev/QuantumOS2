@@ -1,5 +1,5 @@
 # TODO List
-- [ ] Fonts & Drawing
+- [X] Fonts & Drawing
 - [ ] GDT
 - [ ] CMOS (time)
 - [ ] Interrupts
