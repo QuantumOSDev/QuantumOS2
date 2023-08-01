@@ -1,0 +1,15 @@
+# TODO List
+- [ ] Fonts & Drawing
+- [ ] GDT
+- [ ] CMOS (time)
+- [ ] Interrupts
+- [ ] Keyboard
+- [ ] Console
+- [ ] PIT
+- [ ] Memory managment
+- [ ] Tasks
+- [ ] ACPI
+- [ ] PCI
+- [ ] ATA Drivers
+- [ ] File system
+- [ ] Basic sound

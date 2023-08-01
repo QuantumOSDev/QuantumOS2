@@ -1,5 +1,11 @@
-#ifndef PIO_H
-#define PIO_H
+/*
+ * QuantumOS Copyright (c) 2022-2023
+ *  - Solindek <solindeklive.biznes@gmail.com>
+ *  - CodeSploit <samuelthart@pm.me>
+ */
+
+#ifndef __QUANTUMN_PIO_H
+#define __QUANTUMN_PIO_H
 
 void outb(unsigned short port, unsigned char data);
 void outs(unsigned short port, unsigned short data);
@@ -11,4 +17,4 @@ unsigned int   inl(unsigned short port);
 
 void psleep(void);
 
-#endif
+#endif /* __QUANTUMN_ */

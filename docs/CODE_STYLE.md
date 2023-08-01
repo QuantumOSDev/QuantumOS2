@@ -37,14 +37,14 @@ char** args = (char**)kcalloc(4, sizeof(char*));
  *  - Your name <youremail@email.com>
  */
 
-#ifndef __QUANTUM_<FILENAME_IN_UPPER_SNAKE_CASE>
-#define __QUANTUM_<FILENAME_IN_UPPER_SNAKE_CASE>
+#ifndef __QUANTUM_<FILENAME_IN_UPPER_SNAKE_CASE>_H
+#define __QUANTUM_<FILENAME_IN_UPPER_SNAKE_CASE>_H
 
 #include <quantum/core.h>
 
 /* Definitions */
 
-#endif /* __QUANTUM_<FILENAME_IN_UPPER_SNAKE_CASE> */
+#endif /* __QUANTUM_<FILENAME_IN_UPPER_SNAKE_CASE>_H */
 ```
 Here's an example of it for Kernel entry header create and edited by Solindek (for example)
 
@@ -54,14 +54,14 @@ Here's an example of it for Kernel entry header create and edited by Solindek (f
  *  - SolindekDev <solindeklive.biznes@gmail.com>
  */
 
-#ifndef __QUANTUM_KERNEL_ENTRY
-#define __QUANTUM_KERNEL_ENTRY
+#ifndef __QUANTUM_KERNEL_ENTRY_H
+#define __QUANTUM_KERNEL_ENTRY_H
 
 #include <quantum/core.h>
 
 void kernel_entry(unsigned long magic, unsigned long addr);
 
-#endif /* __QUANTUM_KERNEL_ENTRY */
+#endif /* __QUANTUM_KERNEL_ENTRY_H */
 ```
 ### If, While, For Statements 
 When we have a if, while or for statement and inside of it there is only one expression we don't need to use brackets (**{}**), here's a example of it:

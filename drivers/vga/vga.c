@@ -1,3 +1,9 @@
+/*
+ * QuantumOS Copyright (c) 2022-2023
+ *  - Solindek <solindeklive.biznes@gmail.com>
+ *  - CodeSploit <samuelthart@pm.me>
+ */
+ 
 #include <quantum/drivers/vga.h>
 #include <quantum/drivers/pio.h>
 

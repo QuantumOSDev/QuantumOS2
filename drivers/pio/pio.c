@@ -1,3 +1,9 @@
+/*
+ * QuantumOS Copyright (c) 2022-2023
+ *  - Solindek <solindeklive.biznes@gmail.com>
+ *  - CodeSploit <samuelthart@pm.me>
+ */
+
 #include <quantum/drivers/pio.h>
 
 void outb(unsigned short port, unsigned char data)

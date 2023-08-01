@@ -1,7 +1,7 @@
 ; Magic header
-FLAGS       equ  0x4
-MAGIC_HEADER       equ  0x1BADB002
-CHECKSUM    equ -(MAGIC_HEADER + FLAGS)
+FLAGS           equ  0x4
+MAGIC_HEADER    equ  0x1BADB002
+CHECKSUM        equ -(MAGIC_HEADER + FLAGS)
 
 ; Bootloader magic number
 BOOTLOADER_MAGIC  equ  0x2BADB002
@@ -38,7 +38,7 @@ section .text
     global BOOTLOADER_MAGIC
 
 _start:
-    extern quantum_kernel_init ; Extern c function 
+    extern kernel_init ; Extern c function 
     
     mov esp, stack_top
     mov eax, BOOTLOADER_MAGIC
@@ -46,5 +46,5 @@ _start:
     push ebx
     push eax
     
-    call quantum_kernel_init
+    call kernel_init
     jmp $

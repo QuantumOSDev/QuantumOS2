@@ -1,5 +1,11 @@
-#ifndef VGA_H
-#define VGA_H
+/*
+ * QuantumOS Copyright (c) 2022-2023
+ *  - Solindek <solindeklive.biznes@gmail.com>
+ *  - CodeSploit <samuelthart@pm.me>
+ */
+
+#ifndef __QUANTUM_VGA_DRIVER_H
+#define __QUANTUM_VGA_DRIVER_H
 
 #define VGA_CTRL_REGISTER 0x3d4
 #define VGA_DATA_REGISTER 0x3d5
@@ -35,4 +41,4 @@ void vga_putchar(char c, unsigned short cl);
 void vga_clear(void);
 void vga_backspace(void);
 
-#endif
+#endif /* __QUANTUM_VGA_DRIVER_H */
