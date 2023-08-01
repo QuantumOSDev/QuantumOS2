@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 
-CFLAGS='-m32 -c -nostdlib -nostdinc -fno-builtin -fno-stack-protector -nostartfiles -nodefaultlibs -I . '
+CFLAGS='-m32 -c -Wno-int-to-pointer-cast -nostdlib -nostdinc -fno-builtin -fno-stack-protector -nostartfiles -nodefaultlibs -I . '
 ASFLAGS='-f elf '
 
 csources = []
