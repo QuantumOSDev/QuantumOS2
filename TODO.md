@@ -1,7 +1,7 @@
 # TODO List
 - [X] Fonts & Drawing
 - [ ] GDT
-- [ ] CMOS (time)
+- [X] CMOS (time)
 - [ ] Interrupts
 - [ ] Keyboard
 - [ ] Console
