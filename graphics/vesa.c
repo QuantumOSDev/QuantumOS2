@@ -58,7 +58,5 @@ void vesa_draw_character(char c, int x, int y, color_t fg,
 void vesa_clear()
 {
     for (int i = 0; i < vesa_global_info.fb_size; i++)
-    {
         ((unsigned char*)vesa_global_info.fb_ptr)[i] = 0;
-    }
 }

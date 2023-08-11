@@ -4,8 +4,8 @@
  *  - CodeSploit <samuelthart@pm.me>
  */
 
-#ifndef __QUANTUMN_PIO_H
-#define __QUANTUMN_PIO_H
+#ifndef __QUANTUMN_H
+#define __QUANTUMN_H
 
 void outb(unsigned short port, unsigned char data);
 void outs(unsigned short port, unsigned short data);
@@ -17,4 +17,4 @@ unsigned int   inl(unsigned short port);
 
 void psleep(void);
 
-#endif /* __QUANTUM_PIO_H */
+#endif /* __QUANTUM_H */

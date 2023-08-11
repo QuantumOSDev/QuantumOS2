@@ -27,6 +27,8 @@ void vesa_draw_rect(int x, int y, int w, int h, color_t color);
 
 void vesa_draw_character(char c, int x, int y, color_t fg, 
                          color_t bg, unsigned char* __font_data);
+                        
+void vesa_clear();
 
 vesa_graphics_t* vesa_get_struct_info();
 

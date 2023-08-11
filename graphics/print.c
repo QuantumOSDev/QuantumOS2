@@ -15,8 +15,8 @@ void print_init(color_t fg, color_t bg)
     print_info.x = 10;
     print_info.y = 10;
 
-    print_info.fg = color_create_rgb(250, 250, 250);
-    print_info.bg = color_create_rgb(  0,   0,   0);
+    print_info.fg = fg;
+    print_info.bg = bg;
 }
 
 void print(const char* msg)

@@ -31,7 +31,7 @@ void gdt_init()
 
 void gdt_set_entry(int n, unsigned int base, unsigned int limit, unsigned int access, unsigned char gran)
 {
-    printf("gdt_set_entry: n=%d, base=%ux, limit=%ux, access=%ux, gran=%ux\n",
+    success_printf("gdt_set_entry", "n=%d, base=%ux, limit=%ux, access=%ux, gran=%ux\n",
                 n, base, limit, access, gran);
 
 	gdt_t* current_gdt = &gdt_desc[n];
@@ -59,6 +59,6 @@ void tts_write(int n, unsigned short ss0, unsigned int esp0)
     tss_entry.cs   = 0x0b;
     tss_entry.ss = tss_entry.ds = tss_entry.es = tss_entry.fs = tss_entry.gs = 0x13;
 
-    printf("tts_write: n=%d, ss0=%ux, esp0=%ux, cs=0x0b\n",
-                n, ss0, esp0);
+    success_printf("tts_write", "n=%d, ss0=%ux, esp0=%ux, cs=0x0b\n",
+               	 n, ss0, esp0);
 }

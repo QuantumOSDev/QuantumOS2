@@ -14,4 +14,6 @@ void sprintf(char* buf, const char* fmt, ...);
 
 void svprintf(char* buffer, const char* fmt, va_list arg);
 
+void success_printf(char* func_name, const char* fmt, ...);
+
 #endif /* __QUANTUM__STDIO_H */

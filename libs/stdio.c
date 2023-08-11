@@ -9,10 +9,31 @@
 
 #include <quantum/graphics/print.h>
 
+#include <quantum/arch/x86_64/pit.h>
+
 static char __global_printf_buf[1024 * 5];
 
 void printf(const char* fmt, ...)
 {    
+	va_list list;
+    va_start(list, fmt);
+
+    memset(__global_printf_buf, 0, 1024 * 5);
+    svprintf(__global_printf_buf, fmt, list);
+	print(__global_printf_buf);
+
+    va_end(list);
+}
+
+void
+success_printf(char* func_name, const char* fmt, ...)
+{
+	print_t* print_struct = get_print_structure();
+	print_struct->fg = color_create_rgb(48, 199, 93);
+	printf("%s", func_name);
+	print_struct->fg = color_create_rgb(250, 250, 250);
+	printf(": ");
+
 	va_list list;
     va_start(list, fmt);
 
