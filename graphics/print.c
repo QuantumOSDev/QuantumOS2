@@ -46,7 +46,8 @@ void insert_backspace()
 {
     print_info.x = print_info.x - 9;
 
-    vesa_draw_character(' ', print_info.x, print_info.y, print_info.fg, print_info.bg, font_data);
+    vesa_draw_rect(print_info.x + 2, print_info.y, 9, 16, color_create_rgb(0, 0, 0));
+    // vesa_draw_character(' ', print_info.x, print_info.y, print_info.bg, print_info.bg, font_data);
 }
 
 void insert_tab() 

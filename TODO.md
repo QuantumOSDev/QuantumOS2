@@ -1,10 +1,10 @@
 # TODO List
 - [X] Fonts & Drawing
-- [ ] GDT
+- [X] GDT
 - [X] CMOS (time)
-- [ ] Interrupts
-- [ ] Keyboard
-- [ ] Console
+- [X] Interrupts
+- [X] Keyboard
+- [X] Console
 - [ ] PIT
 - [ ] Memory managment
 - [ ] Tasks

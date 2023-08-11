@@ -31,7 +31,7 @@ void kernel_init(unsigned long magic, unsigned long addr)
 
     vesa_graphics_t* vesa_graphics = vesa_init(mb_info);
 
-    print_init(color_create_rgb(250, 250, 250), color_create_rgb(24, 25, 26));
+    print_init(color_create_rgb(250, 250, 250), color_create_rgb(0, 0, 0));
     
     success_printf("kernel_init", "Hello, World!\n");
     success_printf("kernel_init", "Quantum OS booted successfully with \"%s\" into %dx%d graphics\n", 
@@ -51,12 +51,40 @@ void kernel_init(unsigned long magic, unsigned long addr)
     gdt_init();
     idt_init();
     pit_init();
+    keyboard_init();
 
-    printf("We would wait 100ms\n");
-    pit_sleep(100);
-    printf("After 100ms, wait 1s\n");
+    success_printf("kernel_init", "loading kernel console..");
     pit_sleep(1000);
-    printf("After 1s, wait 10s\n");
-    pit_sleep(10000);
-    printf("done\n");
+
+    vesa_clear();
+    print_t* print_struct = get_print_structure();
+    print_struct->x = 10;
+    print_struct->y = 10;
+
+    while (1)
+    {
+        printf("quauntumOS@root ~ ");
+
+        char keysc;
+        int  char_len;
+
+        while ((keysc = keyboard_getchar()) != '\n')
+        {
+            if (keysc == '\b')
+            {
+                if (char_len != 0)
+                {
+                    insert_backspace();
+                    char_len--;
+                }
+
+                continue;
+            }
+
+            printf("%c", keysc);
+            char_len++;
+        }
+
+        printf("\n");
+    }
 }
