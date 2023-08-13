@@ -25,6 +25,9 @@
 #include <quantum/arch/x86_64/pic.h>
 #include <quantum/arch/x86_64/pit.h>
 
+#include <quantum/mm/kmmap.h>
+#include <quantum/mm/heap.h>
+
 void kernel_init(unsigned long magic, unsigned long addr)
 {
     multiboot_info_t* mb_info = (multiboot_info_t*)addr;
@@ -53,38 +56,44 @@ void kernel_init(unsigned long magic, unsigned long addr)
     pit_init();
     keyboard_init();
 
-    success_printf("kernel_init", "loading kernel console..");
-    pit_sleep(1000);
+    kernel_memory_map_t kmmap;
+    kmmap_get_kernel_memory_map(&kmmap, mb_info);
 
-    vesa_clear();
-    print_t* print_struct = get_print_structure();
-    print_struct->x = 10;
-    print_struct->y = 10;
+    heap_init(&kmmap);
 
-    while (1)
-    {
-        printf("quauntumOS@root ~ ");
+    // success_printf("kernel_init", "loading kernel console..");
 
-        char keysc;
-        int  char_len;
+    // pit_sleep(1000);
 
-        while ((keysc = keyboard_getchar()) != '\n')
-        {
-            if (keysc == '\b')
-            {
-                if (char_len != 0)
-                {
-                    insert_backspace();
-                    char_len--;
-                }
+    // vesa_clear();
+    // print_t* print_struct = get_print_structure();
+    // print_struct->x = 10;
+    // print_struct->y = 10;
 
-                continue;
-            }
+    // while (1)
+    // {
+    //     printf("quauntumOS@root ~ ");
 
-            printf("%c", keysc);
-            char_len++;
-        }
+    //     char keysc;
+    //     int  char_len;
 
-        printf("\n");
-    }
+    //     while ((keysc = keyboard_getchar()) != '\n')
+    //     {
+    //         if (keysc == '\b')
+    //         {
+    //             if (char_len != 0)
+    //             {
+    //                 insert_backspace();
+    //                 char_len--;
+    //             }
+
+    //             continue;
+    //         }
+
+    //         printf("%c", keysc);
+    //         char_len++;
+    //     }
+
+    //     printf("\n");
+    // }
 }
