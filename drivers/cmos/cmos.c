@@ -10,14 +10,12 @@
 
 unsigned char cmos_get_update_in_progress_flag()
 {
-    outb(CMOS_ADDRESS, 0x0A);
-
-    return (inb(CMOS_DATA) & 0x80);
+    return cmos_get_register(0x0A) & 0x80;
 }
 
 unsigned char cmos_get_register(int _register)
 {
-    outb(CMOS_ADDRESS, _register);
+	outb(CMOS_ADDRESS, _register);
 
-    return (inb(CMOS_DATA));
+	return (inb(CMOS_DATA));
 }
