@@ -14,6 +14,7 @@ class Arguments:
 	def __init__(self,args):
 		self.cc=None
 		self.asm=None
+		self.ld=None
 		self.grub_rescue=None
 		self.run=False
 		self.should_rebuild=False
@@ -34,6 +35,12 @@ class Arguments:
 					exit(1)
 				self.asm=args[index]
 				self.should_rebuild=True
+			elif arg=="--ld":
+				index+=1
+				if index>=len(args):
+					print("--ld requires argument")
+					exit(1)
+				self.ld=args[index]
 			elif arg=="--grub-rescue":
 				index+=1
 				if index>=len(args):
@@ -61,6 +68,7 @@ class Arguments:
 		print("Arguments:")
 		print("  --cc <compiler>                Specify C compiler")
 		print("  --asm <assembler>              Specify assembler")
+		print("  --ld <linker>                  Specify linker")
 		print("  --grub-rescue <grub rescue>    Specify GRUB Rescue for creating ISO image")
 		print("  --rebuild                      Full rebuild")
 
@@ -89,11 +97,14 @@ class BuildConfig:
 					self.ssources[p]=os.path.getmtime(p)
 
 	def generate_config(self,args):
+		self.should_rebuild=True
 		print("** Generating build config...")
 		self.determine_cc(args)
 		print("C compiler on this system is " + self.cc)
 		self.determine_asm(args)
 		print("Assembler on this system is " + self.asm)
+		self.determine_ld(args)
+		print("Linker on this system is "+self.ld)
 		self.determine_grub_rescue(args)
 		print("GRUB Rescue on this system is "+self.grub_rescue)
 
@@ -108,12 +119,18 @@ class BuildConfig:
 			self.asm=args.asm
 		else:
 			self.asm="nasm"
+
+	def determine_ld(self,args):
+		if args.ld:
+			self.ld=args.ld
+		else:
+			self.ld="ld"
 	
 	def determine_grub_rescue(self,args):
 		if args.grub_rescue:
 			self.grub_rescue=args.grub_rescue
 		else:
-			self.grub_rescue="grub-mkcrescue"
+			self.grub_rescue="grub-mkrescue"
 
 	def try_load_config(self):
 		file=None
@@ -123,12 +140,13 @@ class BuildConfig:
 			return False
 		json_config=json.load(file)
 		file.close()
-		REQUIRED_VALUES=["cc","asm","grub_rescue","cflags","asmflags","csources","ssources"]
+		REQUIRED_VALUES=["cc","asm","ld","grub_rescue","cflags","asmflags","csources","ssources"]
 		for val in REQUIRED_VALUES:
 			if not val in json_config:
 				return False
 		self.cc=json_config["cc"]
 		self.asm=json_config["asm"]
+		self.ld=json_config["ld"]
 		self.grub_rescue=json_config["grub_rescue"]
 		self.cflags=json_config["cflags"]
 		self.asmflags=json_config["asmflags"]
@@ -142,6 +160,7 @@ class BuildConfig:
 		json_config={
 			"cc": self.cc,
 			"asm": self.asm,
+			"ld": self.ld,
 			"grub_rescue": self.grub_rescue,
 			"cflags": self.cflags,
 			"asmflags": self.asmflags,
@@ -196,7 +215,7 @@ for c in dict(config.csources,**config.ssources):
 	total.append("build/" + c +".o")
 
 print("** Linking kernel...")
-result = subprocess.run(["ld", "-m", "elf_i386", "-Tconfig/linker.ld", "-o", "build/iso/boot/kernel.elf"] + total)
+result = subprocess.run([config.ld, "-m", "elf_i386", "-Tconfig/linker.ld", "-o", "build/iso/boot/kernel.elf"] + total)
 check_result_code(result)
 result = subprocess.run(["cp", "-f", "config/grub.cfg", "build/iso/boot/grub"])
 check_result_code(result)
