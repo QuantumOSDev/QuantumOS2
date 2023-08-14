@@ -30,7 +30,7 @@ rtc_time_t rtc_get_current_time()
 	{
 		last_time = rtc_time;
 
-		rtc_no_update_in_progress();
+		rtc_ensure_no_update_in_progress();
 
 		rtc_time.second = cmos_get_register(0x00);
 		rtc_time.minute = cmos_get_register(0x02);

@@ -59,7 +59,7 @@ void kernel_init(unsigned long magic, unsigned long addr)
     kernel_memory_map_t kmmap;
     kmmap_get_kernel_memory_map(&kmmap, mb_info);
 
-    heap_init(&kmmap);
+    //heap_init(&kmmap);
 
     // success_printf("kernel_init", "loading kernel console..");
 

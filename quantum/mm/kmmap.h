@@ -11,6 +11,9 @@
 #include <quantum/libs/stdio.h>
 #include <quantum/libs/stdlib.h>
 
+typedef unsigned long u64;
+typedef int i32;
+
 extern unsigned char kernel_section_start;
 extern unsigned char kernel_section_end;
 extern unsigned char kernel_text_section_start;
