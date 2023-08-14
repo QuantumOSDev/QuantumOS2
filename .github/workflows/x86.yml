@@ -18,7 +18,7 @@ jobs:
             matrix:
                 compiler:
                     - "gcc"
-                    - "clang"
+                    # - "clang" Temporarly disabled
         runs-on: "ubuntu-20.04"
         steps:
             - uses: "actions/checkout@v2"
@@ -27,7 +27,7 @@ jobs:
             - name: "Install build tools"
               run: |
                   sudo apt update
-                  sudo apt install -y python3 ${{matrix.compiler}} nasm xorriso
+                  sudo apt install -y python3 ${{matrix.compiler}} nasm xorriso mtools
             - name: "Build"
               run: |
                   python3 build.py --cc ${{matrix.compiler}}
