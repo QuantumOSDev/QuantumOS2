@@ -1,39 +1,39 @@
 # QuantumOS Copyright (c) 2022-2023
-#	- mrkubax10 <mrkubax10@onet.pl>
+#   - mrkubax10 <mrkubax10@onet.pl>
 
 name: "x86"
 on:
-	push:
-		branches:
-			- "main"
-			- "ci"
-		tags:
-			- "*"
-	pull_request: {}
+    push:
+        branches:
+            - "main"
+            - "ci"
+        tags:
+            - "*"
+    pull_request: {}
 
 jobs:
-	x86:
-		strategy:
-			fail-fast: false
-			matrix:
-				compiler:
-					- "g++"
-					- "clang"
-		runs-on: "ubuntu-20.04"
-		steps:
-			- uses: "actions/checkout@v2"
-			with:
-				fetch-depth: 1
-			- name: "Install build tools"
-			run: |
-				sudo apt update
-				sudo apt install -y python3 ${{matrix.compiler}} nasm xorriso
-			- name: "Build"
-			run: |
-				python3 build.py --cc ${{matrix.compiler}}
-			- name: "Upload artifact"
-			uses: "actions/upload-artifact@v2"
-			with:
-				name: "quantumos-x86-${{matrix.compiler}}"
-				path: "build/quantumos.iso"
-				if-no-files-found: "ignore"
+    x86:
+        strategy:
+            fail-fast: false
+            matrix:
+                compiler:
+                    - "g++"
+                    - "clang"
+        runs-on: "ubuntu-20.04"
+        steps:
+            - uses: "actions/checkout@v2"
+              with:
+                  fetch-depth: 1
+            - name: "Install build tools"
+              run: |
+                  sudo apt update
+                  sudo apt install -y python3 ${{matrix.compiler}} nasm xorriso
+            - name: "Build"
+              run: |
+                  python3 build.py --cc ${{matrix.compiler}}
+            - name: "Upload artifact"
+              uses: "actions/upload-artifact@v2"
+              with:
+                  name: "quantumos-x86-${{matrix.compiler}}"
+                  path: "build/quantumos.iso"
+                  if-no-files-found: "ignore"
