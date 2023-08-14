@@ -33,7 +33,7 @@ int kmmap_get_kernel_memory_map(kernel_memory_map_t* map, multiboot_info_t* mb)
 
     map->system.total_memory = mb->mem_lower + mb->mem_upper;
 
-    for (i32 i = 0; i < mb->mmap_length; i += sizeof(multiboot_memory_map_edited_t))
+    for (int  i = 0; i < mb->mmap_length; i += sizeof(multiboot_memory_map_edited_t))
     {
         multiboot_memory_map_edited_t* mmap = ((multiboot_memory_map_edited_t*)(mb->mmap_addr + i));
 

@@ -53,9 +53,9 @@ typedef struct __kernel_memory_map_t {
     } system;
 
     struct {
-        u64 start;
-        u64 end;
-        u64 size;
+        unsigned long start;
+        unsigned long end;
+        unsigned long size;
     } available;
 } kernel_memory_map_t;
 

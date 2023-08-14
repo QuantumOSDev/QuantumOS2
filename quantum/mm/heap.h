@@ -12,8 +12,7 @@
 #include <quantum/libs/stdio.h>
 #include <quantum/libs/stdlib.h>
 
-#define MAGIC_HEAP_PAGE_FREE { 0x50, 0x3D, 0xFF, 'F', 'R', 'E', 'E', 0x5F }
-#define MAGIC_HEAP_PAGE_USED { 0x50, 0x3D, 0xFF, 'U', 'S', 'E', 'D', 0x5F }
+#define MAGIC_HEAP_PAGE { 0x50, 0x3D, 0xFF, 'Q', 'T', 'O', 'S', 0x5F }
 
 typedef struct __heap_page_t {
     unsigned char         magic[8];
@@ -31,9 +30,8 @@ typedef struct __heap_t {
     heap_page_t*         first_page;
 } heap_t;
 
-
 void heap_init(kernel_memory_map_t* kmmap);
 
-void heap_allocate(size_t n);
+void* heap_allocate(size_t size);
 
 #endif /* __QUANTUM_HEAP_H */

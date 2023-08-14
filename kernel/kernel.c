@@ -53,13 +53,20 @@ void kernel_init(unsigned long magic, unsigned long addr)
     
     gdt_init();
     idt_init();
-    pit_init();
-    keyboard_init();
 
     kernel_memory_map_t kmmap;
     kmmap_get_kernel_memory_map(&kmmap, mb_info);
 
     //heap_init(&kmmap);
+
+    pit_init();
+    keyboard_init();
+
+    heap_allocate(3218903040);
+    pit_sleep(1030);
+    heap_allocate(0);
+    pit_sleep(3030);
+    heap_allocate(1024);
 
     // success_printf("kernel_init", "loading kernel console..");
 

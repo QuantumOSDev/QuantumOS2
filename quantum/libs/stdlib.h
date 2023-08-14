@@ -22,4 +22,10 @@ char* itoa(int value, char* str, int base);
 char* ltoa(long value, char* str, int base);
 char* ultoa(unsigned long value, char* str, int base);
 
+void* realloc(void* ptr, size_t size);
+void* malloc (size_t size);
+void* calloc (size_t nmemb, size_t size);
+
+void free(void* ptr);
+
 #endif /* __QUANTUM_STDLIB_H */

@@ -130,3 +130,20 @@ char* ultoa(unsigned long value, char* str, int base)
     memcpy(str, pos, &buffer[32] - pos + 1);
     return str;
 }
+
+void* malloc(size_t size)
+{
+    info_printf("malloc", "trying to allocate %u bytes inside of kernel", size);
+    return heap_allocate(size);
+}
+
+void* calloc(size_t nmemb, size_t size)
+{
+    size_t final_size = (size_t)(nmemb * size);
+
+    info_printf("calloc", "trying to allocate %u bytes inside of kernel", final_size);
+    void* ptr = heap_allocate(final_size);
+    memset(ptr, 0, final_size);
+
+    return ptr;
+}

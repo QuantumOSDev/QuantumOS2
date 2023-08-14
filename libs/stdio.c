@@ -7,11 +7,19 @@
 #include <quantum/libs/stdarg.h>
 #include <quantum/libs/string.h>
 
+#include <quantum/drivers/serial.h>
+
 #include <quantum/graphics/print.h>
 
 #include <quantum/arch/x86_64/pit.h>
 
 static char __global_printf_buf[1024 * 5];
+
+static bool print_info_and_errors_to_fb = false;
+static bool print_scucess_to_fb 		= true;
+
+void set_print_info_and_errors_to_fb(bool state) { print_info_and_errors_to_fb = state; }
+void set_print_scucess_to_fb		(bool state) { print_scucess_to_fb = state; 		}
 
 void printf(const char* fmt, ...)
 {    
@@ -25,23 +33,110 @@ void printf(const char* fmt, ...)
     va_end(list);
 }
 
+void error_printf(char* func_name, const char* fmt, ...)
+{
+	if (print_info_and_errors_to_fb == true)
+	{
+		print_t* print_struct = get_print_structure();
+		print_struct->fg = color_create_rgb(204, 57, 89);
+		printf("%s", func_name);
+		print_struct->fg = color_create_rgb(250, 250, 250);
+		printf(": ");
+
+		va_list list;
+		va_start(list, fmt);
+
+		memset(__global_printf_buf, 0, 1024 * 5);
+		svprintf(__global_printf_buf, fmt, list);
+		print(__global_printf_buf);
+
+		va_end(list);
+	} 
+	else
+	{
+		serial_printf("\x1b[1;31m%s\x1b[0;0m: ", func_name);
+
+		va_list list;
+		va_start(list, fmt);
+
+		memset(__global_printf_buf, 0, 1024 * 5);
+		svprintf(__global_printf_buf, fmt, list);
+
+		va_end(list);
+
+		serial_printf("%s", __global_printf_buf);
+	}
+}
+
+void info_printf(char* func_name, const char* fmt, ...)
+{
+	if (print_info_and_errors_to_fb == true)
+	{
+		print_t* print_struct = get_print_structure();
+		print_struct->fg = color_create_rgb(74, 145, 212);
+		printf("%s", func_name);
+		print_struct->fg = color_create_rgb(250, 250, 250);
+		printf(": ");
+
+		va_list list;
+		va_start(list, fmt);
+
+		memset(__global_printf_buf, 0, 1024 * 5);
+		svprintf(__global_printf_buf, fmt, list);
+		print(__global_printf_buf);
+
+		va_end(list);
+	}
+	else
+	{
+		serial_printf("\x1b[1;33m%s\x1b[0;0m: ", func_name);
+
+		va_list list;
+		va_start(list, fmt);
+
+		memset(__global_printf_buf, 0, 1024 * 5);
+		svprintf(__global_printf_buf, fmt, list);
+
+		va_end(list);
+
+		serial_printf("%s", __global_printf_buf);
+	}
+}
+
 void
 success_printf(char* func_name, const char* fmt, ...)
 {
-	print_t* print_struct = get_print_structure();
-	print_struct->fg = color_create_rgb(48, 199, 93);
-	printf("%s", func_name);
-	print_struct->fg = color_create_rgb(250, 250, 250);
-	printf(": ");
+	if (print_scucess_to_fb == true)
+	{
+		print_t* print_struct = get_print_structure();
+		print_struct->fg = color_create_rgb(48, 199, 93);
+		printf("%s", func_name);
+		print_struct->fg = color_create_rgb(250, 250, 250);
+		printf(": ");
 
-	va_list list;
-    va_start(list, fmt);
+		va_list list;
+		va_start(list, fmt);
 
-    memset(__global_printf_buf, 0, 1024 * 5);
-    svprintf(__global_printf_buf, fmt, list);
-	print(__global_printf_buf);
+		memset(__global_printf_buf, 0, 1024 * 5);
+		svprintf(__global_printf_buf, fmt, list);
+		print(__global_printf_buf);
 
-    va_end(list);
+		va_end(list);
+	}
+	else
+	{
+		serial_printf("\x1b[1;32m%s\x1b[0;0m: ", func_name);
+
+		va_list list;
+		va_start(list, fmt);
+
+		memset(__global_printf_buf, 0, 1024 * 5);
+		svprintf(__global_printf_buf, fmt, list);
+
+		va_end(list);
+
+		serial_printf("%s", __global_printf_buf);
+	}
 }
 
 void sprintf(char* buf, const char* fmt, ...)
@@ -98,6 +193,11 @@ void svprintf(char* buffer, const char* fmt, va_list arg)
 						__base = 8;
 					else if (curr_char == 'b')
 						__base = 2;
+					else
+					{
+						i--;
+						curr_char = fmt[i];
+					}
 
 					ultoa(__u32, buf, __base);
 					__base = 10;
