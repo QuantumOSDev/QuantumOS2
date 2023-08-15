@@ -51,7 +51,7 @@ void* heap_allocate(size_t size)
 {
     if ((heap_allocator->mem_used + size) > heap_allocator->kmmap->available.size)
     {
-        error_printf("heap_allocate", "not enough memory to allocate %u bytes\n", size);
+        error_printf("heap_allocate", "not enough memory to allocate %u %u bytes\n", size);
         return NULL;   
     }
 

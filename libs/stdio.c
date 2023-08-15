@@ -106,37 +106,23 @@ void info_printf(char* func_name, const char* fmt, ...)
 void
 success_printf(char* func_name, const char* fmt, ...)
 {
-	if (print_scucess_to_fb == true)
-	{
-		print_t* print_struct = get_print_structure();
-		print_struct->fg = color_create_rgb(48, 199, 93);
-		printf("%s", func_name);
-		print_struct->fg = color_create_rgb(250, 250, 250);
-		printf(": ");
+	print_t* print_struct = get_print_structure();
+	print_struct->fg = color_create_rgb(48, 199, 93);
+	printf("%s", func_name);
+	print_struct->fg = color_create_rgb(250, 250, 250);
+	printf(": ");
 
-		va_list list;
-		va_start(list, fmt);
+	va_list list;
+	va_start(list, fmt);
 
-		memset(__global_printf_buf, 0, 1024 * 5);
-		svprintf(__global_printf_buf, fmt, list);
-		print(__global_printf_buf);
+	memset(__global_printf_buf, 0, 1024 * 5);
+	svprintf(__global_printf_buf, fmt, list);
+	print(__global_printf_buf);
 
-		va_end(list);
-	}
-	else
-	{
-		serial_printf("\x1b[1;32m%s\x1b[0;0m: ", func_name);
+	va_end(list);
 
-		va_list list;
-		va_start(list, fmt);
-
-		memset(__global_printf_buf, 0, 1024 * 5);
-		svprintf(__global_printf_buf, fmt, list);
-
-		va_end(list);
-
-		serial_printf("%s", __global_printf_buf);
-	}
+	serial_printf("\x1b[1;32m%s\x1b[0;0m: ", func_name);
+	serial_printf("%s", __global_printf_buf);
 }
 
 void sprintf(char* buf, const char* fmt, ...)

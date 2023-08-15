@@ -5,8 +5,8 @@
 - [X] Interrupts
 - [X] Keyboard
 - [X] Console
-- [ ] PIT
-- [ ] Memory managment
+- [X] PIT
+- [X] Memory managment
 - [ ] Tasks
 - [ ] ACPI
 - [ ] PCI

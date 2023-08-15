@@ -7,6 +7,8 @@
 #include <quantum/libs/string.h>
 #include <quantum/libs/stdio.h>
 
+#include <quantum/mm/heap.h>
+
 int atoi(const char* str)
 {
     int result = 0;
