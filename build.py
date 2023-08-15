@@ -125,7 +125,7 @@ class BuildConfig:
 			self.ld=args.ld
 		else:
 			self.ld="ld"
-	
+
 	def determine_grub_rescue(self,args):
 		if args.grub_rescue:
 			self.grub_rescue=args.grub_rescue
@@ -184,7 +184,7 @@ config=BuildConfig(args)
 print("** Building...")
 i=1
 for c in config.csources:
-	if not config.should_rebuild and config.csources[c]==config.old_csources[c]:
+	if not config.should_rebuild and c in config.old_csources and config.csources[c]==config.old_csources[c]:
 		continue
 	folder_path = "build/"+os.path.dirname(c)
 	if not os.path.exists(folder_path):
@@ -196,7 +196,7 @@ for c in config.csources:
 
 i=1
 for s in config.ssources:
-	if not config.should_rebuild and config.old_ssources[s]==config.ssources[s]:
+	if not config.should_rebuild and s in config.old_ssources and config.old_ssources[s]==config.ssources[s]:
 		continue
 	folder_path = "build/"+os.path.dirname(s)
 	if not os.path.exists(folder_path):
