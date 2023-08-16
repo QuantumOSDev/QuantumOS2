@@ -11,9 +11,9 @@
 #include <quantum/graphics/print.h>
 #include <quantum/graphics/vesa.h>
 
-#include <quantum/libs/stdio.h>
-#include <quantum/libs/string.h>
-#include <quantum/libs/stdlib.h>
+#include <quantum/clib/stdio.h>
+#include <quantum/clib/string.h>
+#include <quantum/clib/stdlib.h>
 
 #include <quantum/arch/x86_64/pit.h>
 

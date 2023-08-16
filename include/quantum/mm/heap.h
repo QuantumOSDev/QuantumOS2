@@ -9,8 +9,8 @@
 
 #include <quantum/mm/kmmap.h>
 
-#include <quantum/libs/stdio.h>
-#include <quantum/libs/stdlib.h>
+#include <quantum/clib/stdio.h>
+#include <quantum/clib/stdlib.h>
 
 #define MAGIC_HEAP_PAGE { 0x50, 0x3D, 0xFF, 'Q', 'T', 'O', 'S', 0x5F }
 
@@ -32,6 +32,9 @@ typedef struct __heap_t {
 
 void heap_init(kernel_memory_map_t* kmmap);
 
+heap_page_t* heap_get_page_by_addr(void* ptr);
+
 void* heap_allocate(size_t size);
+void  heap_free(void* ptr);
 
 #endif /* __QUANTUM_HEAP_H */

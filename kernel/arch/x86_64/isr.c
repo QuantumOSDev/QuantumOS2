@@ -9,8 +9,8 @@
 
 #include <quantum/drivers/pio.h>
 
-#include <quantum/libs/stdlib.h>
-#include <quantum/libs/stdio.h>
+#include <quantum/clib/stdlib.h>
+#include <quantum/clib/stdio.h>
 
 #include <quantum/arch/x86_64/idt.h>
 #include <quantum/arch/x86_64/isr.h>

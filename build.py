@@ -86,15 +86,13 @@ class BuildConfig:
 	def collect_sources(self):
 		for root, dirnames, filenames in os.walk('.'):
 			for filename in fnmatch.filter(filenames, '*.c'):
-				if "apps" not in os.path.join(root, filename) and "clib" not in os.path.join(root, filename):
-					p = os.path.join(root, filename)
-					self.csources[p]=os.path.getmtime(p)
+				p = os.path.join(root, filename)
+				self.csources[p]=os.path.getmtime(p)
 
 		for root, dirnames, filenames in os.walk('.'):
 			for filename in fnmatch.filter(filenames, '*.asm'):
-				if "apps" not in os.path.join(root, filename) and "clib" not in os.path.join(root, filename):
-					p = os.path.join(root, filename)
-					self.ssources[p]=os.path.getmtime(p)
+				p = os.path.join(root, filename)
+				self.ssources[p]=os.path.getmtime(p)
 
 	def generate_config(self,args):
 		self.should_rebuild=True
@@ -155,7 +153,7 @@ class BuildConfig:
 		return True
 
 	def write_config(self):
-		self.cflags=["-m32", "-Wno-int-to-pointer-cast", "-nostdlib", "-nostdinc", "-fno-builtin", "-fno-stack-protector", "-nostartfiles", "-nodefaultlibs", "-I."]
+		self.cflags=["-m32", "-Wno-int-to-pointer-cast", "-nostdlib", "-nostdinc", "-fno-builtin", "-fno-stack-protector", "-nostartfiles", "-nodefaultlibs", "-I./include/"]
 		self.asmflags=["-f", "elf"]
 		json_config={
 			"cc": self.cc,
@@ -180,6 +178,8 @@ def check_result_code(result):
 
 args=Arguments(sys.argv)
 config=BuildConfig(args)
+
+config.collect_sources()
 
 print("** Building...")
 i=1

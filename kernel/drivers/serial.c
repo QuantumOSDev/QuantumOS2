@@ -7,9 +7,9 @@
 #include <quantum/drivers/serial.h>
 #include <quantum/drivers/pio.h>
 
-#include <quantum/libs/stdlib.h>
-#include <quantum/libs/string.h>
-#include <quantum/libs/stdio.h>
+#include <quantum/clib/stdlib.h>
+#include <quantum/clib/string.h>
+#include <quantum/clib/stdio.h>
 
 #ifndef SERIAL_PORT
 # define SERIAL_PORT 0x3F8

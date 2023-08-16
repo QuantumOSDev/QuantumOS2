@@ -3,9 +3,9 @@
  *  - Solindek <solindeklive.biznes@gmail.com>
  */
  
-#include <quantum/libs/stdlib.h>
-#include <quantum/libs/string.h>
-#include <quantum/libs/stdio.h>
+#include <quantum/clib/stdlib.h>
+#include <quantum/clib/string.h>
+#include <quantum/clib/stdio.h>
 
 #include <quantum/mm/heap.h>
 
@@ -122,11 +122,10 @@ char* ultoa(unsigned long value, char* str, int base)
     {
         digit = value % base;
         value = value / base;
-        if (digit < 10) {
+        if (digit < 10) 
             *--pos = (char)('0' + digit);
-        } else {
+        else 
             *--pos = (char)('a' + digit - 10);
-        } 
     } while (value != 0L);
 
     memcpy(str, pos, &buffer[32] - pos + 1);
@@ -135,7 +134,7 @@ char* ultoa(unsigned long value, char* str, int base)
 
 void* malloc(size_t size)
 {
-    info_printf("malloc", "trying to allocate %u bytes inside of kernel", size);
+    info_printf("malloc", "trying to allocate %u bytes inside of kernel\n", size);
     return heap_allocate(size);
 }
 
@@ -143,9 +142,56 @@ void* calloc(size_t nmemb, size_t size)
 {
     size_t final_size = (size_t)(nmemb * size);
 
-    info_printf("calloc", "trying to allocate %u bytes inside of kernel", final_size);
+    info_printf("calloc", "trying to allocate %u bytes inside of kernel\n", final_size);
     void* ptr = heap_allocate(final_size);
     memset(ptr, 0, final_size);
 
     return ptr;
+}
+
+void free(void* ptr)
+{
+    info_printf("free", "trying to unallocate ptr at 0x%ux\n", ptr);
+    heap_free(ptr);
+}
+
+void* realloc(void* ptr, size_t size)
+{
+    /* If ptr is NULL then realloc is working like malloc */
+    if (ptr == NULL)
+    {
+        error_printf("realloc", "ptr=NULL, realloc is now working like malloc\n");
+        return malloc(size);
+    }
+
+    /* If size is 0 then realloc is working like free */
+    if (size == 0) 
+    {
+        error_printf("realloc", "size=0, realloc is now working like free\n");
+        free(ptr);
+        return NULL;
+    }
+
+    void* new_ptr = malloc(size);
+
+    if (new_ptr == NULL) 
+    {
+        error_printf("realloc", "couldn't allocate new_ptr\n");
+        return NULL;
+    }
+
+    heap_page_t* page = heap_get_page_by_addr(ptr);
+
+    if (page == NULL)
+    {
+        error_printf("heap_free", "didn't find page at 0x%ux\n", ptr);
+        return NULL;
+    }
+
+    size_t old_size = page->size;
+    size_t copy_size = (old_size < size) ? old_size : size;
+    memcpy(new_ptr, ptr, copy_size);
+
+    free(ptr);
+    return new_ptr;
 }

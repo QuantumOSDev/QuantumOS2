@@ -3,9 +3,9 @@
  *  - Solindek <solindeklive.biznes@gmail.com>
  */
  
-#include <quantum/libs/stdio.h>
-#include <quantum/libs/stdarg.h>
-#include <quantum/libs/string.h>
+#include <quantum/clib/stdio.h>
+#include <quantum/clib/stdarg.h>
+#include <quantum/clib/string.h>
 
 #include <quantum/drivers/serial.h>
 

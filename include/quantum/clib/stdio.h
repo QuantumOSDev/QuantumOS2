@@ -6,8 +6,8 @@
 #ifndef __QUANTUM__STDIO_H
 #define __QUANTUM__STDIO_H
 
-#include <quantum/libs/stdarg.h>
-#include <quantum/libs/stdbool.h>
+#include <quantum/clib/stdarg.h>
+#include <quantum/clib/stdbool.h>
 
 void printf(const char* fmt, ...);
 

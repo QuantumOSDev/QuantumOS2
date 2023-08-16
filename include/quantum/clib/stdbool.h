@@ -6,7 +6,7 @@
 #ifndef __QUANTUM_STDBOOL_H
 #define __QUANTUM_STDBOOL_H
 
-#include <quantum/libs/stdlib.h>
+#include <quantum/clib/stdlib.h>
 
 typedef _Bool bool;
 

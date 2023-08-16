@@ -8,8 +8,8 @@
 
 #include <quantum/multiboot.h>
 
-#include <quantum/libs/stdio.h>
-#include <quantum/libs/stdlib.h>
+#include <quantum/clib/stdio.h>
+#include <quantum/clib/stdlib.h>
 
 typedef unsigned long u64;
 typedef int i32;

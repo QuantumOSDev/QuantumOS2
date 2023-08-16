@@ -16,8 +16,8 @@
 #include <quantum/drivers/vga.h>
 #include <quantum/drivers/pio.h>
 
-#include <quantum/libs/stdlib.h>
-#include <quantum/libs/stdio.h>
+#include <quantum/clib/stdlib.h>
+#include <quantum/clib/stdio.h>
 
 #include <quantum/arch/x86_64/gdt.h>
 #include <quantum/arch/x86_64/idt.h>
@@ -62,11 +62,8 @@ void kernel_init(unsigned long magic, unsigned long addr)
     pit_init();
     keyboard_init();
 
-    heap_allocate(3218903040);
-    pit_sleep(1030);
-    heap_allocate(0);
-    pit_sleep(3030);
-    heap_allocate(1024);
+    void* p = heap_allocate(1024);
+    heap_free(p);
 
     // success_printf("kernel_init", "loading kernel console..");
 

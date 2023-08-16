@@ -5,8 +5,8 @@
 
 #include <quantum/multiboot.h>
 
-#include <quantum/libs/stdio.h>
-#include <quantum/libs/stdlib.h>
+#include <quantum/clib/stdio.h>
+#include <quantum/clib/stdlib.h>
 
 #include <quantum/mm/kmmap.h>
 #include <quantum/mm/heap.h>

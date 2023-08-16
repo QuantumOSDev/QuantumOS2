@@ -6,7 +6,7 @@
 #ifndef __QUANTUM_STDINT_H
 #define __QUANTUM_STDINT_H
 
-#include <quantum/libs/stdlib.h>
+#include <quantum/clib/stdlib.h>
 
 typedef unsigned long  uint64_t;
 typedef unsigned int   uint32_t;

@@ -6,7 +6,7 @@
 #ifndef __QUANTUM_STRING_H
 #define __QUANTUM_STRING_H
 
-#include <quantum/libs/stdlib.h>
+#include <quantum/clib/stdlib.h>
 
 size_t strlen(const char* s);
 
@@ -25,5 +25,7 @@ void* memset(void* ptr, int c, size_t n);
 void* memset16(unsigned short* ptr, unsigned short c, size_t n);
 void* memset32(unsigned int* ptr, unsigned int c, size_t n);
 void* memset64(unsigned long* ptr, unsigned long c, size_t n);
+
+int memcmp(const void *s1, const void *s2, size_t n);
 
 #endif /* __QUANTUM_STRING_H */

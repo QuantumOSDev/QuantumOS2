@@ -5,8 +5,8 @@
 
 #include <quantum/arch/x86_64/gdt.h>
 
-#include <quantum/libs/string.h>
-#include <quantum/libs/stdio.h>
+#include <quantum/clib/string.h>
+#include <quantum/clib/stdio.h>
 
 gdt_t gdt_desc[GDT_DESCRIPTOR_COUNT];
 gdt_ptr_t gdt_ptr;
