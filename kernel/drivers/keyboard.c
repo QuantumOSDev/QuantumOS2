@@ -25,123 +25,118 @@
 static char keyboard_map[128] = KEYBOARD_MAP_ENG;
 
 static bool keyboard_shift_pressed = false;
-static bool keyboard_caps_lock     = false;
+static bool keyboard_caps_lock	   = false;
 
 static char keyboard_current_char  = 0;
-static char keyboard_current_sc    = 0;
+static char keyboard_current_sc	   = 0;
 
 void keyboard_set_key_map(char* key_map)
 {
-    memcpy(keyboard_map, key_map, 128);
+	memcpy(keyboard_map, key_map, 128);
 }
 
 char* keyboard_get_key_map()
 {
-    return keyboard_map;
+	return keyboard_map;
 }
 
 char keyboard_alternate(char ch)
 {
-    switch (ch)
-    {
-        case '`' :  return '~' ;
-        case '1' :  return '!' ;
-        case '2' :  return '@' ;
-        case '3' :  return '#' ;
-        case '4' :  return '$' ;
-        case '5' :  return '%' ;
-        case '6' :  return '^' ;
-        case '7' :  return '&' ;
-        case '8' :  return '*' ;
-        case '9' :  return '(' ;
-        case '0' :  return ')' ;
-        case '-' :  return '_' ;
-        case '=' :  return '+' ;
-        case '[' :  return '{' ;
-        case ']' :  return '}' ;
-        case '\\':  return '|' ;
-        case ';' :  return ':' ;
-        case '\'':  return '\"';
-        case ',' :  return '<' ;
-        case '.' :  return '>' ;
-        case '/' :  return '?' ;
+	switch (ch)
+	{
+		case '`' :  return '~' ;
+		case '1' :  return '!' ;
+		case '2' :  return '@' ;
+		case '3' :  return '#' ;
+		case '4' :  return '$' ;
+		case '5' :  return '%' ;
+		case '6' :  return '^' ;
+		case '7' :  return '&' ;
+		case '8' :  return '*' ;
+		case '9' :  return '(' ;
+		case '0' :  return ')' ;
+		case '-' :  return '_' ;
+		case '=' :  return '+' ;
+		case '[' :  return '{' ;
+		case ']' :  return '}' ;
+		case '\\':  return '|' ;
+		case ';' :  return ':' ;
+		case '\'':  return '\"';
+		case ',' :  return '<' ;
+		case '.' :  return '>' ;
+		case '/' :  return '?' ;
 
-        default: return ch;
-    }
+		default: return ch;
+	}
 }
 
 char keyboard_getsc()
 {
-    int scancode;
-    int i;
+	int scancode;
+	int i;
 
-    for (i = 1000; i > 0; i++)
-    {
-        if ((inb(KEYBOARD_STATUS_PORT) & KEYBOARD_READY) == 0)
-            continue;
+	for (i = 1000; i > 0; i++)
+	{
+		if ((inb(KEYBOARD_STATUS_PORT) & KEYBOARD_READY) == 0)
+			continue;
 
-        scancode = inb(KEYBOARD_DATA_PORT);
-        break;
-    }
+		scancode = inb(KEYBOARD_DATA_PORT);
+		break;
+	}
 
-    if (i > 0)
-        return scancode;
+	if (i > 0)
+		return scancode;
 
-    return 0;
+	return 0;
 }
 
 char keyboard_getchar()
 {
-    while (keyboard_current_char <= 0)
-        ;
+	while (keyboard_current_char <= 0)
+		;
 
-    char copy_key_char = keyboard_current_char;
-    keyboard_current_char = 0;
+	char copy_key_char = keyboard_current_char;
+	keyboard_current_char = 0;
 
-    return copy_key_char;
+	return copy_key_char;
 }
 
 char keyboard_getchar_no_wait()
 {
-    if (!keyboard_current_char <= 0)
-        return '\0';
+	if (!keyboard_current_char <= 0)
+		return '\0';
 
-    char copy_key_char = keyboard_current_char;
-    keyboard_current_char = 0;
+	char copy_key_char = keyboard_current_char;
+	keyboard_current_char = 0;
 
-    return copy_key_char;
+	return copy_key_char;
 }
 
 char* keyboard_getchar_until(char c)
 {
-    // static char result[1024];
-    // char input = keyboard_getchar();
+	static char result[1024];
+	char input;
 
-    // memset(result, 0, 1024);
+	memset(result, 0, 1024);
+	size_t result_length = 0;
 
-    // while (input != c)
-    // {
-    //     if (input == '\b')
-    //     {
-    //         if (strlen(result) > 0)
-    //         {
-    //             printf("\b");
-    //             result[strlen(result) - 1] = '\0';
+	while ((input = keyboard_getchar()) != c)
+	{
+		if (input == '\b')
+		{
+			if (result_length > 0)
+			{
+				result[--result_length] = 0;
+				printf("\b");
+			}
+			continue;
+		}
 
-    //             input = keyboard_getchar();
-    //             continue;
-    //         }
+        printf("%c", input);
+        result[result_length++] = input;
+    }
 
-    //         input = keyboard_getchar();
-    //         continue;
-    //     }
-
-    //     printf("%c", input);
-    //     strcat(result, (const char[]){input, 0});
-    //     input = keyboard_getchar();
-    // }
-
-    // return (char*)result;
+    return (char*)result;
 }
 
 static void keyboard_handler(registers_t *regs)
