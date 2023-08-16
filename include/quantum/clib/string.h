@@ -1,6 +1,7 @@
 /*
  * QuantumOS Copyright (c) 2022-2023
  *  - Solindek <solindeklive.biznes@gmail.com>
+ *  - mrkubax10 <mrkubax10@onet.pl>
  */
  
 #ifndef __QUANTUM_STRING_H
@@ -27,5 +28,7 @@ void* memset32(unsigned int* ptr, unsigned int c, size_t n);
 void* memset64(unsigned long* ptr, unsigned long c, size_t n);
 
 int memcmp(const void *s1, const void *s2, size_t n);
+
+char* strtok(char* str, const char* delimiters);
 
 #endif /* __QUANTUM_STRING_H */
