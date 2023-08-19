@@ -184,7 +184,7 @@ config.collect_sources()
 print("** Building...")
 i=1
 for c in config.csources:
-	if not config.should_rebuild and c in config.old_csources and config.csources[c]==config.old_csources[c]:
+	if not config.should_rebuild and c in config.old_csources and config.csources[c]==config.old_csources[c] and os.path.exists("build/"+c+".o"):
 		continue
 	folder_path = "build/"+os.path.dirname(c)
 	if not os.path.exists(folder_path):
@@ -196,7 +196,7 @@ for c in config.csources:
 
 i=1
 for s in config.ssources:
-	if not config.should_rebuild and s in config.old_ssources and config.old_ssources[s]==config.ssources[s]:
+	if not config.should_rebuild and s in config.old_ssources and config.old_ssources[s]==config.ssources[s] and os.path.exists("build/"+s+".o"):
 		continue
 	folder_path = "build/"+os.path.dirname(s)
 	if not os.path.exists(folder_path):
