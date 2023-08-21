@@ -181,11 +181,22 @@ def mount_system_image(format, mountpoint_folder):
 	if format:
 		check_result_code(subprocess.run(["sudo", "parted", "-s", "build/disk.img", "mklabel", "msdos", "mkpart", "primary", "fat32", "1MiB", "100%", "-a", "minimal", "set", "1", "boot", "on"]))
 	check_result_code(subprocess.run(["sudo", "kpartx", "-a", "build/disk.img"]))
+	result=subprocess.run(["sudo", "kpartx", "-l", "build/disk.img"], stdout=subprocess.PIPE)
+	decoded_output=result.stdout.decode("UTF-8")
+	parsed=decoded_output.split(" ")
+	if len(parsed)<4:
+		print("** Invalid output from kpartx ("+decoded_output+"). Stopping.")
+		exit(1)
+	device_path=parsed[4].split("/")
+	if len(device_path)!=3:
+		print("** Invalid device path outputted from kpartx ("+parsed[4]+"). Stopping.")
+		exit(1)
+	device=device_path[2]
 	if format:
-		check_result_code(subprocess.run(["sudo", "mkfs.exfat", "/dev/mapper/loop0p1"]))
-	check_result_code(subprocess.run(["sudo", "mount", "/dev/mapper/loop0p1", mountpoint_folder, "-o", "umask=000"]))
+		check_result_code(subprocess.run(["sudo", "mkfs.exfat", "/dev/mapper/"+device+"p1"]))
+	check_result_code(subprocess.run(["sudo", "mount", "/dev/mapper/"+device+"p1", mountpoint_folder, "-o", "umask=000"]))
 	if format:
-		check_result_code(subprocess.run(["sudo", config.grub_install, "--no-floppy", "--grub-mkdevicemap=config/grub_devicemap.map", "--modules=biosdisk part_msdos  exfat configfile normal multiboot", "--root-directory="+mountpoint_folder, "--boot-directory="+mountpoint_folder+"/boot", "/dev/loop0", "--target=i386-pc"]))
+		check_result_code(subprocess.run(["sudo", config.grub_install, "--no-floppy", "--grub-mkdevicemap=config/grub_devicemap.map", "--modules=biosdisk part_msdos  exfat configfile normal multiboot", "--root-directory="+mountpoint_folder, "--boot-directory="+mountpoint_folder+"/boot", parsed[4], "--target=i386-pc"]))
 
 def unmount_system_image(mountpoint_folder):
 	check_result_code(subprocess.run(["sudo", "umount", mountpoint_folder]))
