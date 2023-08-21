@@ -31,9 +31,10 @@ jobs:
             - name: "Build"
               run: |
                   python3 build.py --cc ${{matrix.compiler}}
+                  xz -z build/disk.img
             - name: "Upload artifact"
               uses: "actions/upload-artifact@v2"
               with:
                   name: "quantumos-x86-${{matrix.compiler}}"
-                  path: "build/quantumos.iso"
+                  path: "build/disk.img.xz"
                   if-no-files-found: "ignore"
