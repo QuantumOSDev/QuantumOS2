@@ -249,7 +249,10 @@ else:
 	print("** Creating new system image...")
 	check_result_code(subprocess.run(["dd", "if=/dev/zero", "of=build/disk.img", "bs=1048576", "count=128"]))
 	mount_system_image(True, mountpoint_folder)
-check_result_code(subprocess.run(["cp", "-f", "config/grub.cfg", mountpoint_folder+"/boot/grub2"]))
+if os.path.exists(mountpoint_folder+"/boot/grub2"):
+	check_result_code(subprocess.run(["cp", "-f", "config/grub.cfg", mountpoint_folder+"/boot/grub2"]))
+else:
+	check_result_code(subprocess.run(["cp", "-f", "config/grub.cfg", mountpoint_folder+"/boot/grub"]))
 check_result_code(subprocess.run(["cp", "-f", "build/kernel.elf", mountpoint_folder+"/boot/kernel.elf"]))
 print("** Unmounting system image...")
 unmount_system_image(mountpoint_folder)
